@@ -369,8 +369,6 @@
   const passwordPrompt1 = document.getElementById("passwordPrompt");
   const passwordpromptModal1 = document.getElementById("password-promptModal");
   let undoCount = 5;
-  //passwordpromptModal1.style.display='block';
-  // Generate puzzle slots
   for (let i = 0; i < tileCount; i++) {
     const slot = document.createElement('div');
     slot.classList.add('slot');
@@ -381,14 +379,13 @@
       const tile = document.getElementById(tileId);
 
       if (!this.hasChildNodes()) {
-        // Save move
         moveStack.push({
           tile,
           from: tile.parentElement,
           to: this
         });
 
-        if (moveStack.length > 5) moveStack.shift(); // keep only last 5
+        if (moveStack.length > 5) moveStack.shift();
 
         this.appendChild(tile);
         checkSolved();
@@ -415,12 +412,12 @@
   });
 
   // Check if puzzle is solved
-  function checkSolved() {
+  function checkSolved() {    
     const slots = document.querySelectorAll('.slot');
     for (let i = 0; i < tileCount; i++) {
       const tile = slots[i].firstChild;
       if (!tile || parseInt(tile.dataset.correct) !== i) return;
-    }
+    }    
     passwordpromptModal1.style.display='block';
   }
 
@@ -500,7 +497,8 @@ starBtn.onclick = () => {
         the one person who never makes me feel small,<br>
         but instead inspires me to grow, to dream, to shine…<br><br>
 
-        and to grow old with you.<br><br>
+        and to grow old with you.<br>
+        (Not everything written here is by me, but every single line made me think of you.)<br><br>
         I LOVE YOU
 
       </p>
