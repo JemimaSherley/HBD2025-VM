@@ -94,19 +94,19 @@
       gap: 2px;
     }
 
-#puzzle {
-  display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
-  gap: 1px;
-  padding: 10px;
-  border: 4px dashed #ff69b4;
-  border-radius: 5px;
-  background: #fff0f5;
-  box-sizing: content-box; 
-  width: max-content;
-  height: max-content;
-}
+  #puzzle {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    gap: 1px;
+    padding: 10px;
+    border: 4px dashed #ff69b4;
+    border-radius: 5px;
+    background: #fff0f5;
+    box-sizing: content-box; 
+    width: max-content;
+    height: max-content;
+  }
 
 
     .tile, .slot {
@@ -162,7 +162,17 @@
   background-color: rgba(33, 33, 33, 0.85);
   animation: fadeIn 1.2s ease-in-out;
 }
-
+.password-promptModal{
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 33, 33, 0.85);
+  animation: fadeIn 1.2s ease-in-out;
+}
 .modal-content {
   background-color: #fff0f5;
   color: #b03060;
@@ -180,7 +190,38 @@
   overflow-y: auto; 
 }
 
-
+.password-prompt {
+  background-color: #fff0f5;
+  color: #b03060;
+  margin: 2% auto;
+  padding: 30px;
+  border: 2px solid #ff69b4;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 0 30px #ff69b4;
+  position: relative;
+  animation: zoomIn 0.6s ease;
+  min-height: 80vh;
+  max-height: 80vh; 
+  overflow-y: auto; 
+}
+    .close-cross {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 32px;
+      color: hotpink;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 1;
+    }
+    .close-cross:hover {
+      color: red;
+      transform: scale(1.2);
+    }
 @keyframes zoomIn {
   from {
     transform: scale(0.6);
@@ -234,8 +275,7 @@
   z-index: 1000;
 }
 
-
-#undoBtn, #starBtn {
+.button-container button {
   padding: 10px 10px;
   font-size: 18px;
   border-radius: 10px;
@@ -248,21 +288,39 @@
   min-height:40px;
   max-height:40px;
 }
-#Loveletterbutton {
-  display: none; 
-  padding: 10px 10px;
+.password-prompt input {
   font-size: 18px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background-color: #dc2d4f;
-  color: white;
-  min-width: 70px;
-  max-width: 70px;
-  min-height:40px;
-  max-height:40px;
+  padding: 12px 16px;
+  font-family: 'Georgia';
+  margin: 10px 0;
+  border: 2px solid #a61e4d;
+  border-radius: 8px;
+  outline: none;
+  width: 60%;
+  box-sizing: border-box;
+}
+.password-prompt input:focus {
+  font-size: 18px;
+  border-color: #a61e4d;
+  box-shadow: 0 0 8px rgba(166, 30, 77, 0.3);
 }
 
+.password-prompt button {
+  font-size: 18px;
+  padding: 12px 24px;
+  background-color: #e60073;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.password-prompt button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.05);
+}
   </style>
 </head>
 <body>
@@ -277,7 +335,14 @@
 <div class="button-container">
   <button id="undoBtn">↶ 5</button>
   <button id="starBtn">☆</button>
-  <button id="Loveletterbutton">♡</button>
+</div>
+
+<div id="password-promptModal" class="password-promptModal">
+  <div class="password-prompt" id="passwordPrompt" >
+    <h3>Enter Password to see the Love Letter</h3>
+    <input type="password" id="passwordInput" placeholder="Enter Password" />
+    <button onclick="checkPassword()">Submit</button>
+  </div>
 </div>
 
 <div id="container">
@@ -286,48 +351,8 @@
 </div>
 
 <div id="loveLetterModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-      <h3>To My Sweetheart</h3>
-      <p>
-        My Love,<br><br>
-
-        There are moments in life when everything just makes sense—<br>
-        when chaos turns calm, when silence feels full, and when a heart finally feels at home.<br>
-        That moment, for me, was you.<br><br>
-
-        You've shown me that love isn’t just a feeling—<br>
-        it’s a promise, a commitment, and a beautiful journey.<br>
-        Because of you, I believe in miracles.<br>
-        Because of you, I love the way I am.<br><br>
-
-        I love you because you are my person.<br>
-        The one I want to share my dreams with,<br>
-        the one I want to build a future with,<br>
-        and the one I want to grow old with.<br><br>
-
-        You are my rock.<br>
-        You are my safe place, my home, my calm in every storm.<br>
-        You make me feel like I’m the most loved and valued person in the world.<br>
-        And the way you prioritize me… it humbles me, it melts me.<br><br>
-
-        No matter how much love I give you, it will never feel like enough—<br>
-        because you deserve more and more, every single day.<br><br>
-
-        You came into my life exactly when I needed you.<br>
-        God sent you to remind me that no one else could ever understand me the way you do,<br>
-        or love me through my chaos the way you do.<br><br>
-
-        As long as you’re by my side, I can take on the world—<br>
-        with joy, with strength, and with all the love in my heart.<br>
-        I’m endlessly grateful to have you,<br>
-        the one person who never makes me feel small,<br>
-        but instead inspires me to grow, to dream, to shine…<br><br>
-
-        and to grow old with you.<br><br>
-        I LOVE YOU
-
-      </p>
+  <div class="modal-content" id="Enterloveletterhere">
+  
   </div>
 </div>
 
@@ -340,8 +365,11 @@
   const positions = [];
   const moveStack = [];
 
+  const letter = document.getElementById("loveLetterModal");
+  const passwordPrompt1 = document.getElementById("passwordPrompt");
+  const passwordpromptModal1 = document.getElementById("password-promptModal");
   let undoCount = 5;
-
+  //passwordpromptModal1.style.display='block';
   // Generate puzzle slots
   for (let i = 0; i < tileCount; i++) {
     const slot = document.createElement('div');
@@ -393,9 +421,7 @@
       const tile = slots[i].firstChild;
       if (!tile || parseInt(tile.dataset.correct) !== i) return;
     }
-    document.getElementById('loveLetterModal').style.display = 'block';
-    document.getElementById('Loveletterbutton').style.display = 'block';
-
+    passwordpromptModal1.style.display='block';
   }
 
   // Undo logic
@@ -416,25 +442,72 @@ document.querySelector('.close-btn').onclick = () => {
   document.getElementById('loveLetterModal').style.display = 'none';
 };
 
-// Optional: Close modal on outside click
-window.onclick = (event) => {
-  const modal = document.getElementById('loveLetterModal');
-  if (event.target === modal) {
-    modal.style.display = 'none';
-  }
-};
+
 const starBtn = document.getElementById('starBtn');
 
 starBtn.onclick = () => {
   window.open('Love.png', 'LoveImage', 'width=600,height=600,resizable=yes');
 };
 
-const Loveletterbutton = document.getElementById('Loveletterbutton');
+  function restartGame() {
+    letter.style.display = 'none';
+  }
+  function checkPassword() {
+    const password = "vilovema"; 
+    if (passwordInput.value === password) {
+      letter.style.display = 'block';
 
-Loveletterbutton.onclick = () => {
-    document.getElementById('loveLetterModal').style.display = 'block';
-};
+      passwordPrompt1.style.display = 'none';
+      passwordpromptModal1.style.display = 'none';
 
+      document.getElementById('loveLetterModal').style.display = 'block'; 
+      const Enterloveletterhere1  = document.getElementById("Enterloveletterhere");
+      Enterloveletterhere.innerHTML = `
+      <button class="close-cross"  onclick="restartGame()">×</button>
+      <h3>To My Sweetheart</h3>
+      <p>
+        My Love,<br><br>
+
+        There are moments in life when everything just makes sense—<br>
+        when chaos turns calm, when silence feels full, and when a heart finally feels at home.<br>
+        That moment, for me, was you.<br><br>
+
+        You've shown me that love isn’t just a feeling—<br>
+        it’s a promise, a commitment, and a beautiful journey.<br>
+        Because of you, I believe in miracles.<br>
+        Because of you, I love the way I am.<br><br>
+
+        I love you because you are my person.<br>
+        The one I want to share my dreams with,<br>
+        the one I want to build a future with,<br>
+        and the one I want to grow old with.<br><br>
+
+        You are my rock.<br>
+        You are my safe place, my home, my calm in every storm.<br>
+        You make me feel like I’m the most loved and valued person in the world.<br>
+        And the way you prioritize me… it humbles me, it melts me.<br><br>
+
+        No matter how much love I give you, it will never feel like enough—<br>
+        because you deserve more and more, every single day.<br><br>
+
+        You came into my life exactly when I needed you.<br>
+        God sent you to remind me that no one else could ever understand me the way you do,<br>
+        or love me through my chaos the way you do.<br><br>
+
+        As long as you’re by my side, I can take on the world—<br>
+        with joy, with strength, and with all the love in my heart.<br>
+        I’m endlessly grateful to have you,<br>
+        the one person who never makes me feel small,<br>
+        but instead inspires me to grow, to dream, to shine…<br><br>
+
+        and to grow old with you.<br><br>
+        I LOVE YOU
+
+      </p>
+      `;
+      letter.hidden = false;
+    }
+  }
 </script>
 
 </body>
