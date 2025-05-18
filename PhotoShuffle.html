@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Memories in a Bowl</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: #fff0f6;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff4d88;
+    }
+
+    .bowl {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    .photo {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed #ccc;
+      background-color: #fff;
+      background-size: cover;
+      background-position: center;
+      cursor: grab;
+    }
+
+    .drop-zone {
+      border: 2px solid #ff4d88;
+      padding: 20px;
+      min-height: 120px;
+      margin: 10px;
+      width: 120px;
+      display: inline-block;
+      vertical-align: top;
+      background-color: #fffafc;
+      border-radius: 10px;
+    }
+
+    .caption {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #99004d;
+      display: none;
+    }
+
+    .completed-message {
+      display: none;
+      margin-top: 30px;
+      font-size: 24px;
+      color: #e60073;
+      animation: pop 1s ease-in-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Memories in a Bowl 🥰</h1>
+  <p>Drag the photos into the correct memory box 💌</p>
+
+  <div class="bowl" id="bowl">
+    <div class="photo" draggable="true" id="img1" style="background-image: url('img1.jpg')"></div>
+    <div class="photo" draggable="true" id="img2" style="background-image: url('img2.jpg')"></div>
+    <div class="photo" draggable="true" id="img3" style="background-image: url('img3.jpg')"></div>
+    <div class="photo" draggable="true" id="img4" style="background-image: url('img4.jpg')"></div>
+    <div class="photo" draggable="true" id="img5" style="background-image: url('img5.jpg')"></div>
+    <div class="photo" draggable="true" id="img6" style="background-image: url('img6.jpg')"></div>
+  </div>
+
+  <div id="dropZones">
+    <div class="drop-zone" data-id="img1">💍 Engagement<br><span class="caption">Our perfect moment 💖</span></div>
+    <div class="drop-zone" data-id="img2">🏞️ Picnic<br><span class="caption">That lake walk I'll never forget 💕</span></div>
+    <div class="drop-zone" data-id="img3">🎂 Birthday<br><span class="caption">Your smile that day lit up my world 🎉</span></div>
+    <div class="drop-zone" data-id="img4">💃 Dance<br><span class="caption">Our rooftop dance under stars ✨</span></div>
+    <div class="drop-zone" data-id="img5">😂 Goofy<br><span class="caption">You being silly = best medicine 😄</span></div>
+    <div class="drop-zone" data-id="img6">📸 Selfie<br><span class="caption">That one selfie that stole my heart 📷</span></div>
+  </div>
+
+  <div class="completed-message" id="completedMessage">💖 All memories sorted! Happy Birthday, my love! 💖</div>
+
+  <script>
+    let dragged;
+
+    document.querySelectorAll('.photo').forEach(photo => {
+      photo.addEventListener('dragstart', e => {
+        dragged = e.target;
+      });
+    });
+
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      zone.addEventListener('dragover', e => e.preventDefault());
+
+      zone.addEventListener('drop', function (e) {
+        if (dragged && dragged.id === this.dataset.id) {
+          this.appendChild(dragged);
+          this.querySelector('.caption').style.display = 'block';
+          dragged.setAttribute('draggable', false);
+          dragged.style.cursor = 'default';
+
+          checkCompletion();
+        }
+      });
+    });
+
+    function checkCompletion() {
+      const done = document.querySelectorAll('.drop-zone .photo').length;
+      if (done === 6) {
+        document.getElementById('completedMessage').style.display = 'block';
+        confetti();
+      }
+    }
+
+    function confetti() {
+      // cute emoji confetti for now
+      let msg = document.getElementById("completedMessage");
+      let burst = setInterval(() => {
+        msg.innerHTML += " 🎊";
+      }, 300);
+      setTimeout(() => clearInterval(burst), 2000);
+    }
+  </script>
+</body>
+</html>

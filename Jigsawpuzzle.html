@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Puzzle Love Bowl</title>
+  <style>
+    body {
+      background-color: #212121;
+      font-family: 'Segoe UI', cursive;
+      text-align: center;
+    }
+    .header {
+        position: fixed;    
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #b03060;
+        color: #fff;
+        font-size: 26px;
+        font-family: 'Georgia';
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;  
+        z-index: 10;  
+        justify-content: space-between;
+    }
+      .navbar1 {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .navbar2 {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+    .homebtn {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    padding: 12px 0px; 
+    font-size: 30px;
+    position: relative;
+    left: 10px; 
+    border-radius: 6px;
+    cursor: pointer; 
+    min-width: 90px;
+    max-width: 90px;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+    text-align: center; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .homebtn:hover {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 10px rgb(236, 178, 233),
+      0 0 2px #fff,
+      0 0 2px rgb(255, 174, 0);
+    color: #fff;
+  }
+    h2 {
+      margin-top: 20px;
+      color: #ffffff;
+    }
+
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      margin-top: 10%;
+    }
+
+    #bowl {
+      max-width: 700px;
+      min-height: 500px;
+      border: 4px dashed #ff69b4;
+      padding: 10px;
+      border-radius: 5px;
+      background: #fff0f5;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+    }
+    #bowl {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(10, 1fr);
+      gap: 2px;
+    }
+
+#puzzle {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  gap: 1px;
+  padding: 10px;
+  border: 4px dashed #ff69b4;
+  border-radius: 5px;
+  background: #fff0f5;
+  box-sizing: content-box; 
+  width: max-content;
+  height: max-content;
+}
+
+
+    .tile, .slot {
+      width: 50px;
+      height: 50px;
+      box-sizing: border-box;
+    }
+
+    .tile {
+      background-image: url('Love.png');
+      background-size: 500px 500px;
+      border: 1px solid #ccc;
+      cursor: grab;
+    }
+
+    .slot {
+      background-color: #fff;
+      border: 1px dashed #ddd;
+    }
+
+#undoBtn {
+  margin-top: 10px;
+  background: #dc2d4f;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  float: right;
+  margin-right: 30px;
+}
+
+
+    #undoBtn:disabled {
+      background-color: #f3d6e3;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 33, 33, 0.85);
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.modal-content {
+  background-color: #fff0f5;
+  color: #b03060;
+  margin: 2% auto;
+  padding: 30px;
+  border: 2px solid #ff69b4;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 0 30px #ff69b4;
+  position: relative;
+  animation: zoomIn 0.6s ease;
+
+  max-height: 80vh; 
+  overflow-y: auto; 
+}
+
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: #b03060;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #ff69b4;
+}
+.modal-content::-webkit-scrollbar {
+  width: 18px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #fdf6e300;
+}
+
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #ff4d4d, #ff99cc);
+  border-radius: 16px;
+  border: 4px solid #fdf6e3;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(to bottom, #e60000, #ff66b2);
+}
+.button-container {
+  position: fixed; 
+  top: 70px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  z-index: 1000;
+}
+
+
+#undoBtn, #starBtn {
+  padding: 10px 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #dc2d4f;
+  color: white;
+  min-width: 70px;
+  max-width: 70px;
+  min-height:40px;
+  max-height:40px;
+}
+#Loveletterbutton {
+  display: none; 
+  padding: 10px 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #dc2d4f;
+  color: white;
+  min-width: 70px;
+  max-width: 70px;
+  min-height:40px;
+  max-height:40px;
+}
+
+  </style>
+</head>
+<body>
+<div class="header">
+    <div class="navbar1">
+      <button class="homebtn" onclick="window.location.href='Kiss.html'">𝐁𝐚𝐜𝐤
+      </button>
+    </div>
+    <div class="navbar2">
+    </div>
+</div>
+<div class="button-container">
+  <button id="undoBtn">↶ 5</button>
+  <button id="starBtn">☆</button>
+  <button id="Loveletterbutton">♡</button>
+</div>
+
+<div id="container">
+  <div id="puzzle"></div>
+  <div id="bowl"></div>
+</div>
+
+<div id="loveLetterModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+      <h3>To My Sweetheart</h3>
+      <p>
+        My Love,<br><br>
+
+        There are moments in life when everything just makes sense—<br>
+        when chaos turns calm, when silence feels full, and when a heart finally feels at home.<br>
+        That moment, for me, was you.<br><br>
+
+        You've shown me that love isn’t just a feeling—<br>
+        it’s a promise, a commitment, and a beautiful journey.<br>
+        Because of you, I believe in miracles.<br>
+        Because of you, I love the way I am.<br><br>
+
+        I love you because you are my person.<br>
+        The one I want to share my dreams with,<br>
+        the one I want to build a future with,<br>
+        and the one I want to grow old with.<br><br>
+
+        You are my rock.<br>
+        You are my safe place, my home, my calm in every storm.<br>
+        You make me feel like I’m the most loved and valued person in the world.<br>
+        And the way you prioritize me… it humbles me, it melts me.<br><br>
+
+        No matter how much love I give you, it will never feel like enough—<br>
+        because you deserve more and more, every single day.<br><br>
+
+        You came into my life exactly when I needed you.<br>
+        God sent you to remind me that no one else could ever understand me the way you do,<br>
+        or love me through my chaos the way you do.<br><br>
+
+        As long as you’re by my side, I can take on the world—<br>
+        with joy, with strength, and with all the love in my heart.<br>
+        I’m endlessly grateful to have you,<br>
+        the one person who never makes me feel small,<br>
+        but instead inspires me to grow, to dream, to shine…<br><br>
+
+        and to grow old with you.<br><br>
+        I LOVE YOU
+
+      </p>
+  </div>
+</div>
+
+<script>
+  const bowl = document.getElementById('bowl');
+  const puzzle = document.getElementById('puzzle');
+  const undoBtn = document.getElementById('undoBtn');
+  const size = 10;
+  const tileCount = size * size;
+  const positions = [];
+  const moveStack = [];
+
+  let undoCount = 5;
+
+  // Generate puzzle slots
+  for (let i = 0; i < tileCount; i++) {
+    const slot = document.createElement('div');
+    slot.classList.add('slot');
+    slot.dataset.index = i;
+    slot.ondragover = (e) => e.preventDefault();
+    slot.ondrop = function (e) {
+      const tileId = e.dataTransfer.getData('text/plain');
+      const tile = document.getElementById(tileId);
+
+      if (!this.hasChildNodes()) {
+        // Save move
+        moveStack.push({
+          tile,
+          from: tile.parentElement,
+          to: this
+        });
+
+        if (moveStack.length > 5) moveStack.shift(); // keep only last 5
+
+        this.appendChild(tile);
+        checkSolved();
+        updateUndoButton();
+      }
+    };
+    puzzle.appendChild(slot);
+    positions.push(i);
+  }
+
+  // Shuffle and create tiles
+  positions.sort(() => Math.random() - 0.5);
+  positions.forEach((pos, i) => {
+    const tile = document.createElement('div');
+    tile.classList.add('tile');
+    tile.style.backgroundPosition = `-${(pos % size) * 50}px -${Math.floor(pos / size) * 50}px`;
+    tile.draggable = true;
+    tile.id = 'tile-' + i;
+    tile.dataset.correct = pos;
+    tile.ondragstart = (e) => {
+      e.dataTransfer.setData('text/plain', tile.id);
+    };
+    bowl.appendChild(tile);
+  });
+
+  // Check if puzzle is solved
+  function checkSolved() {
+    const slots = document.querySelectorAll('.slot');
+    for (let i = 0; i < tileCount; i++) {
+      const tile = slots[i].firstChild;
+      if (!tile || parseInt(tile.dataset.correct) !== i) return;
+    }
+    document.getElementById('loveLetterModal').style.display = 'block';
+    document.getElementById('Loveletterbutton').style.display = 'block';
+
+  }
+
+  // Undo logic
+  undoBtn.onclick = () => {
+    if (undoCount > 0 && moveStack.length > 0) {
+      const lastMove = moveStack.pop();
+      lastMove.from.appendChild(lastMove.tile);
+      undoCount--;
+      updateUndoButton();
+    }
+  };
+
+  function updateUndoButton() {
+    undoBtn.textContent = `↶ ${undoCount}`;
+    undoBtn.disabled = undoCount === 0;
+  }
+document.querySelector('.close-btn').onclick = () => {
+  document.getElementById('loveLetterModal').style.display = 'none';
+};
+
+// Optional: Close modal on outside click
+window.onclick = (event) => {
+  const modal = document.getElementById('loveLetterModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+};
+const starBtn = document.getElementById('starBtn');
+
+starBtn.onclick = () => {
+  window.open('Love.png', 'LoveImage', 'width=600,height=600,resizable=yes');
+};
+
+const Loveletterbutton = document.getElementById('Loveletterbutton');
+
+Loveletterbutton.onclick = () => {
+    document.getElementById('loveLetterModal').style.display = 'block';
+};
+
+</script>
+
+</body>
+</html>

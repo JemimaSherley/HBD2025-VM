@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Puzzle Love Bowl</title>
+  <style>
+    .header {
+        position: fixed;    
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #c5940c;
+        color: #fff;
+        font-size: 26px;
+        font-family: 'Georgia';
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;  
+        z-index: 10;  
+        justify-content: space-between;
+    }
+      .navbar1 {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .navbar2 {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+    .homebtn {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    padding: 12px 0px; 
+    font-size: 30px;
+    position: relative;
+    left: 10px; 
+    border-radius: 6px;
+    cursor: pointer; 
+    min-width: 90px;
+    max-width: 90px;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+    text-align: center; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .homebtn:hover {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 10px rgb(236, 178, 233),
+      0 0 2px #fff,
+      0 0 2px rgb(255, 174, 0);
+    color: #fff;
+  }
+    h2 {
+      margin-top: 20px;
+      color: #ffffff;
+    }
+
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      margin-top: 80px;
+    }
+
+    #bowl {
+      max-width: 700px;
+      min-height: 500px;
+      border: 4px dashed #ff69b4;
+      padding: 10px;
+      border-radius: 5px;
+      background: #fff0f5;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+    }
+    #bowl {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(10, 1fr);
+      gap: 2px;
+    }
+
+#puzzle {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  gap: 1px;
+  padding: 10px;
+  border: 4px dashed #ff69b4;
+  border-radius: 5px;
+  background: #fff0f5;
+  box-sizing: content-box; 
+  width: max-content;
+  height: max-content;
+}
+
+
+    .tile, .slot {
+      width: 50px;
+      height: 50px;
+      box-sizing: border-box;
+    }
+
+    .tile {
+      background-image: url('Love.png');
+      background-size: 500px 500px;
+      border: 1px solid #ccc;
+      cursor: grab;
+    }
+
+    .slot {
+      background-color: #fff;
+      border: 1px dashed #ddd;
+    }
+
+    #loveLetter {
+      display: block;
+      margin-top: 20px;
+      padding: 20px;
+      background: #fff0f5;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: 20px auto;
+      box-shadow: 0 0 15px #ff69b4;
+      animation: fadeIn 2s ease-in-out;
+      color: #b03060;
+    }
+#undoBtn {
+  margin-top: 10px;
+  background: #dc2d4f;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  float: right;
+  margin-right: 30px;
+}
+
+
+    #undoBtn:disabled {
+      background-color: #f3d6e3;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 33, 33, 0.85);
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.modal-content {
+  background-color: #fff0f5;
+  color: #b03060;
+  margin: 2% auto;
+  padding: 30px;
+  border: 2px solid #ff69b4;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 0 30px #ff69b4;
+  position: relative;
+  animation: zoomIn 0.6s ease;
+
+  max-height: 80vh; 
+  overflow-y: auto; 
+}
+
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: #b03060;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #ff69b4;
+}
+.modal-content::-webkit-scrollbar {
+  width: 18px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #fdf6e300;
+}
+
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #ff4d4d, #ff99cc);
+  border-radius: 16px;
+  border: 4px solid #fdf6e3;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(to bottom, #e60000, #ff66b2);
+}
+.button-container {
+  position: fixed; 
+  top: 70px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  z-index: 1000;
+}
+
+
+.button-container button {
+  padding: 10px 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #dc2d4f;
+  color: white;
+  min-width: 70px;
+  max-width: 70px;
+  min-height:40px;
+  max-height:40px;
+}
+
+    body {
+      background-color: #212121;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Segoe UI', sans-serif;
+        align-items: center;
+    }
+.top-right-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+  color: #dbdcdf;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  display: none;
+      background-color: #2121219a;
+
+}
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.top-right-label {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+    .emoji-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .emoji {
+      position: absolute;
+      color: #ffcc00;
+      opacity: 0.6;
+      animation: float 20s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh) rotate(0deg); }
+      to   { transform: translateY(-100vh) rotate(360deg); }
+    }
+    .top-right-label {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.top-right-label.show {
+  opacity: 1;
+}
+  </style>
+</head>
+<body>
+<div class="header">
+    <div class="navbar1">
+      <button class="homebtn" onclick="window.location.href='Kiss.html'">𝐁𝐚𝐜𝐤
+      </button>
+    </div>
+    <div class="navbar2">
+    </div>
+</div>
+<div class="emoji-bg" id="emoji-bg"></div>
+  <div class="top-right-label">𝐒𝐌𝐈𝐋𝐄 𝐈𝐅 𝐘𝐎𝐔 𝐖𝐀𝐍𝐓 𝐀𝐍𝐎𝐓𝐇𝐄𝐑 𝐆𝐈𝐑𝐋𝐅𝐑𝐈𝐄𝐍𝐃</div>
+  <script>
+    const emojiContainer = document.getElementById('emoji-bg');
+    const emojis = ['🙂','😀','😃','😄','😁','😆','☺️','😊'];
+    
+    for (let i = 0; i < 100; i++) {
+      const emoji = document.createElement('div');
+      emoji.className = 'emoji';
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      emoji.style.fontSize = `${Math.random() * 40 + 20}px`;
+      emoji.style.left = `${Math.random() * 100}vw`;
+      emoji.style.top = `${Math.random() * 100}vh`;
+      emoji.style.animationDuration = `${Math.random() * 20 + 10}s`;
+      emoji.style.opacity = Math.random() * 0.6 + 0.2;
+
+      emojiContainer.appendChild(emoji);
+    }
+      setTimeout(() => {
+    const label = document.querySelector('.top-right-label');
+    label.style.display = 'block';
+    setTimeout(() => label.classList.add('show'), 50);
+  }, 3000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday My Love</title>
+  <style>
+    body {
+      background-color: #212121;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .top-right-label {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      font-weight: bold;
+      color: #dbdcdf;
+      cursor: pointer;
+    }
+
+    .heartbeat {
+      display: inline-block;
+      animation: beat 0.8s infinite;
+    }
+    .header {
+        align-items: center; 
+        display: flex; 
+        background-color:  #660834;
+        color: #fff; 
+        padding: 15px 20px; 
+        text-align: center; 
+        font-size: 26px; 
+        font-family: 'Arial';
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: bold; 
+    }
+    .navbar1 {
+        display: flex;
+        align-items: center;
+        gap: 0px;
+    }
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.4);
+      }
+    }
+
+    .container {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 350px;
+      height: 350px;
+      cursor: pointer;
+    }
+
+    #girl {
+      width: 350px;
+      height: 350px;
+      image-rendering: pixelated;
+    }
+
+    .kiss {
+      position: absolute;
+      top: -60px;
+      left: 80%;
+      transform: translateX(-80%);
+      font-size: 50px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .kiss.animate {
+      animation: floatKiss 1s ease-in-out forwards;
+    }
+
+    @keyframes floatKiss {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0);
+      }
+      30% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-30px);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-70px);
+      }
+    }
+    .button-grid {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-wrap: wrap;
+      width: 800px;
+      gap: 20px;
+      justify-content: center;
+    }
+
+  .cute-button {
+    
+    width: 200px;
+    height: 200px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 8px;
+    background-color: #ffe0f0;
+    border: 2px solid #ffb6c1;
+    border-radius: 12px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #d63384;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .cute-button:hover {
+    transform: scale(1.1);
+    background-color: #ffd6eb;
+  }
+
+  .cute-button img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 5px;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+      <div class="navbar1">
+      </div>
+  </div>
+    
+  <audio id="heartbeat-sound" src="heartbeat.mp3" preload="auto"></audio>
+  <div class="top-right-label">𝐇𝐚𝐩𝐩𝐲 𝐁𝐢𝐫𝐭𝐡𝐝𝐚𝐲 𝐌𝐲 𝐋𝐨𝐯𝐞<span id="heart" onmouseenter="startHeartbeat()" onmouseleave="stopHeartbeat()">🩵</span></div>
+  <div class="button-grid">
+    <button class="cute-button" onclick="window.location.href='Whack-our-People.html'"><img src="WhackThem.png"></button>
+    <button class="cute-button" onclick="window.location.href='Jigsawpuzzle.html'"><img src="Puzzle.png"></button>
+    <button class="cute-button" onclick="window.location.href='Smile.html'"><img src="Smile.png"></button>
+  </div>
+
+  <div class="container" onmouseenter="blowKiss()">
+    <img id="girl" src="img1.png" alt="Pixel Girl">
+    <div id="kiss" class="kiss">❤️</div>
+  </div>
+
+  <script>
+    const girl = document.getElementById('girl');
+    const kiss = document.getElementById('kiss');
+    const heart = document.getElementById('heart');
+    const heartbeatSound = document.getElementById('heartbeat-sound');
+
+    const frames = ['img1.png', 'img2.png', 'img3.png'];
+
+    function blowKiss() {
+      girl.src = frames[1];
+      setTimeout(() => {
+        girl.src = frames[2];
+        kiss.classList.remove('animate');
+        void kiss.offsetWidth;
+        kiss.classList.add('animate');
+      }, 200);
+      setTimeout(() => {
+        girl.src = frames[0];
+      }, 1200);
+    }
+
+    function startHeartbeat() {
+      heart.classList.add('heartbeat');
+      heartbeatSound.loop = true;
+      heartbeatSound.play();
+    }
+
+    function stopHeartbeat() {
+      heart.classList.remove('heartbeat');
+      heartbeatSound.pause();
+      heartbeatSound.currentTime = 0;
+    }
+  </script>
+
+</body>
+</html>
