@@ -421,9 +421,9 @@
     const password = "vilovema"; 
     if (passwordInput.value === password) {
       letter.style.display = 'block';
-      passwordPrompt.style.display = 'none';
+      document.getElementById('passwordPrompt').style.display = 'none';
       document.getElementById('letter').style.display = 'block'; 
-      const letter = document.getElementById("letter");
+      
       letter.innerHTML = `
         I love you, Pa.<br><br>
         You are the best thing that’s ever happened to me.<br>
@@ -440,11 +440,12 @@
         You just love—and that’s everything.<br><br>
         Forever yours,<br>
         With all my heart,<br>
+        (Not everything written here is by me, but every single line made me think of you.)<br><br>
         Love you ❤️.
       `;
       letter.hidden = false;
     } else {
-      window.location.href = "index.html";
+      window.location.href = "kiss.html";
     }
   }
   function popUp() {
